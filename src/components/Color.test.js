@@ -26,13 +26,33 @@ test("Renders the color passed into component", () => {
 });
 
 test("Executes handleDelete and toggleEdit property when the 'x' icon is clicked", () => {
-    // const buttonX = screen.queryByTestId("delete")
-    // // const color= screen.queryByText(/aqua/i)
-    // userEvent.click(buttonX)
-    // // expect(color).not.toBeInTheDocument()
-    // expect(button).not.toBeInTheDocument()
+    const mockDelete =jest.fn(() => {return 'delete'})
+    const mockToggle =jest.fn(()=>{ return 'toggle'})
+
+    const { getByTestId } = render(<Color color={colors} 
+                  toggleEdit={mockToggle} deleteColor={mockDelete}/>)
+    
+    const button = getByTestId(/delete/i); 
+ 
+    userEvent.click(button) 
+
+    expect(mockDelete).toHaveBeenCalled();
+    expect(mockToggle).toHaveBeenCalled();
+
 });
 
 test("Executes setEditColor and toggleEdit property when color div is clicked", () => {
-    
+    const mockEdit = jest.fn(()=> {return 'edit'})
+    const mockToggle =jest.fn(()=>{ return 'toggle'})
+
+    const { getByTestId } = render(<Color color={colors}
+    toggleEdit={mockToggle}  setEditColor={mockEdit}/>)
+
+
+    const button = getByTestId(/color/i);
+
+    userEvent.click(button) 
+
+    expect(mockEdit).toHaveBeenCalled();
+    expect(mockToggle).toHaveBeenCalled();
 });
